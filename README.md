@@ -34,3 +34,5 @@ In Authorization tab, we have to set Bearer token returned from localhost:3000/a
 POST endpoint like localhost:3001/products
 PATCH endpoint like localhost:3001/products/:product-id
 DELETE endpoint like localhost:3001/products/:product-id
+
+JWT token is verified from Auth service from Product service. This communication is done through RabbitMQ.
