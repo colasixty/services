@@ -1,0 +1,54 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    ports:
+      - "5672:5672"      # for RabbitMQ (AMQP)
+      - "15672:15672"    # for RabbitMQ management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - backend
+
+#  mongodb:
+#    image: mongo:6
+#    container_name: mongodb
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongo-data:/data/db
+
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+#      - mongodb
+    environment:
+      - MONGO_URI=mongodb://host.docker.internal:27017/demo
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    networks:
+      - backend
+
+  product-service:
+    build:
+      context: ./product-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - auth-service
+      - rabbitmq
+#      - mongodb
+    environment:
+      - MONGO_URI=mongodb://host.docker.internal:27017/demo
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    networks:
+      - backend
+
+volumes:
+  mongo-data:
+
+networks:
+  backend:
