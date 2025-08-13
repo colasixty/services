@@ -22,14 +22,15 @@ It will return JWT token.
     "description": "desc",
     "price": 10
 }
-9) There are other endpoints like PATCH localhost:3001/products/<product-id>, Body will be JSON like:
+9) There are other endpoints like PATCH localhost:3001/products/:product-id, Body will be JSON like:
 {
     "name": "product1",
     "description": "desc",
     "price": 5
 }
-10) DELETE endpoint localhost:3001/products/<product-id>
+10) DELETE endpoint localhost:3001/products/:product-id.
+
 In Authorization tab, we have to set Bearer token returned from localhost:3000/auth/login for product service endpoints like:
 POST endpoint like localhost:3001/products
-PATCH endpoint like localhost:3001/products/<product-id>
-DELETE endpoint like localhost:3001/products/<product-id>
+PATCH endpoint like localhost:3001/products/:product-id
+DELETE endpoint like localhost:3001/products/:product-id
